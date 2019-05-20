@@ -124,6 +124,8 @@
 
             $('#difficulty').text(difficulty);
 
+            getQuestion();
+
             var counter = setInterval(timer, 1000);
 
             function timer() {
@@ -138,6 +140,10 @@
                 console.log(count)
                 $('.time').text(count);
             };
+        };
+
+        function getQuestion() {
+            
         };
 
         function incorrect() {
