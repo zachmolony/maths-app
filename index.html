@@ -67,14 +67,86 @@
         }
     }
 
+    /* QUESTION PAGE */
+
+    .topbar {
+        display: flex;
+        position: absolute;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100vw;
+        margin-top: 8vh;
+    }
+
+    #difficulty {
+        position: absolute;
+        margin-top: 8vh;
+        text-align: center;
+        width: 100%;
+        font-weight: 600;
+        font-size: 10vw;
+        color: #ff3333;
+    }
+
+    .time {
+        position: relative;
+        padding-left: 5vw;
+        font-weight: 600;
+        font-size: 10vw;
+        color: #000000;
+        text-align: left;
+    }
+
+    .score {
+        position: relative;
+        padding-right: 5vw;
+        font-weight: 600;
+        font-size: 10vw;
+        color: #000000;
+        text-align: center;
+    }
 </style>
 
 <body>
     <script>
         function startQuiz(difficulty) {
-            console.log(difficulty);
+            $('.home').fadeOut();
+            setTimeout(function () {
+                $('.question').fadeIn();
+            }, 800);
+            if (difficulty == 'easy') {
+                $('.time').text('');
+            } else if (difficulty == 'medium') {
+                var count = 21;
+            } else {
+                var count = 11;
+            };
+
+            $('#difficulty').text(difficulty);
+
+            var counter = setInterval(timer, 1000);
+
+            function timer() {
+                count = count - 1;
+                if (count <= 0) {
+                    clearInterval(counter);
+                    //counter ended, do something here
+                    incorrect();
+                    return;
+                };
+                //showing the number of seconds here
+                console.log(count)
+                $('.time').text(count);
+            };
         };
 
+        function incorrect() {
+            $('html').css({'backgroundColor':'red'});
+        };
+
+        function correct() {
+            $('html').css({'backgroundColor':'green'});
+        };
     </script>
 
     <div class="home" style="display:block">
@@ -87,14 +159,20 @@
         </div>
     </div>
 
-    <div class="question" style="display:block">
-           <p id="difficulty"></p>
+    <div class="question" style="display:none">
+        <p id="difficulty">HARD</p>
+
+        <div class="topbar">
+            <div class="time"></div>
+
+            <div class="score">3</div>
+        </div>
 
 
     </div>
 
     <div class="score" style="display:none">
-            <img src="assets/logo.png" alt="Ada Maths logo" id="logo">
+        <img src="assets/logo.png" alt="Ada Maths logo" id="logo">
     </div>
 
 
