@@ -105,14 +105,24 @@
         color: #000000;
         text-align: center;
     }
+
+    .question {
+        position: absolute;
+        margin-top: 25vh;
+        width: 100%;
+        font-size: 5em;
+        text-align: center;
+    }
 </style>
 
 <body>
     <script>
+        const operators = ["*", "/", "+", "-"];
+
         function startQuiz(difficulty) {
             $('.home').fadeOut();
             setTimeout(function () {
-                $('.question').fadeIn();
+                $('.test').fadeIn();
             }, 800);
             if (difficulty == 'easy') {
                 $('.time').text('');
@@ -142,16 +152,35 @@
             };
         };
 
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
         function getQuestion() {
-            
+            console.log("fdf");
+            flag = true;
+            while (flag) {
+                ans = getRandomInt(12) + operators[getRandomInt(operators.length)] + getRandomInt(12);
+                console.log(ans);
+                if (Number.isInteger(ans)) {
+                    flage = false;
+                };
+            };
+            console.log("ff");
+
+            $('.question').text(getRandomInt(12) + " " + operators[getRandomInt(operators.length)] + " " + getRandomInt(12));
         };
 
         function incorrect() {
-            $('html').css({'backgroundColor':'red'});
+            $('html').css({
+                'backgroundColor': 'red'
+            });
         };
 
         function correct() {
-            $('html').css({'backgroundColor':'green'});
+            $('html').css({
+                'backgroundColor': 'green'
+            });
         };
     </script>
 
@@ -165,7 +194,7 @@
         </div>
     </div>
 
-    <div class="question" style="display:none">
+    <div class="test" style="display:none">
         <p id="difficulty">HARD</p>
 
         <div class="topbar">
@@ -174,6 +203,11 @@
             <div class="score">3</div>
         </div>
 
+        <div class="question"></div>
+
+        <div class="answers">
+            <button id="a" onclick="getQuestion()">yeah</button>
+        </div>
 
     </div>
 
