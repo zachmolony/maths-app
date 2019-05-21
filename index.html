@@ -113,6 +113,11 @@
         font-size: 5em;
         text-align: center;
     }
+
+    .answers {
+        position: absolute;
+        margin-top: 60vh;
+    }
 </style>
 
 <body>
@@ -132,10 +137,7 @@
                 var count = 11;
             };
 
-            $('#difficulty').text(difficulty);
-
-            getQuestion();
-
+            /* TIMER */
             var counter = setInterval(timer, 1000);
 
             function timer() {
@@ -147,9 +149,12 @@
                     return;
                 };
                 //showing the number of seconds here
-                console.log(count)
                 $('.time').text(count);
             };
+
+            $('#difficulty').text(difficulty);
+
+            getQuestion();
         };
 
         function getRandomInt(max) {
@@ -157,19 +162,28 @@
         }
 
         function getQuestion() {
-            console.log("fdf");
-            flag = true;
-            while (flag) {
-                ans = getRandomInt(12) + operators[getRandomInt(operators.length)] + getRandomInt(12);
+            ans = -0.1;
+            while (!Number.isInteger(ans) || (ans < 0)) {
+                q = [2 + getRandomInt(12), operators[getRandomInt(operators.length)], 2 + getRandomInt(12)];
+                ans = eval(q[0] + q[1] + q[2]);
                 console.log(ans);
-                if (Number.isInteger(ans)) {
-                    flage = false;
-                };
             };
-            console.log("ff");
+            $('.question').text(q[0] + " " + q[1] + " " + q[2]);
 
-            $('.question').text(getRandomInt(12) + " " + operators[getRandomInt(operators.length)] + " " + getRandomInt(12));
+            /* GET ANSWERS */
+            possibleAnswers = [ans, ans + 1, ans + 2, ans + 3];
+            possibleAnswers.sort(function () {
+                return .5 - Math.random();
+            });
+            $('#a').text(possibleAnswers[0]);
+            $('#b').text(possibleAnswers[1]);
+            $('#c').text(possibleAnswers[2]);
+            $('#d').text(possibleAnswers[3]);
         };
+
+        function checkAnswer(param) {
+            console.log(param);
+                };
 
         function incorrect() {
             $('html').css({
@@ -206,7 +220,10 @@
         <div class="question"></div>
 
         <div class="answers">
-            <button id="a" onclick="getQuestion()">yeah</button>
+            <button id="a" onclick="checkAnswer($(this).text())"></button>
+            <button id="b" onclick="checkAnswer($(this).text())"></button>
+            <button id="c" onclick="checkAnswer($(this).text())"></button>
+            <button id="d" onclick="checkAnswer($(this).text())"></button>
         </div>
 
     </div>
