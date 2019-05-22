@@ -152,28 +152,6 @@
             setTimeout(function () {
                 $('.test').fadeIn();
             }, 800);
-            if (difficulty == 'easy') {
-                $('.time').text('');
-            } else if (difficulty == 'medium') {
-                var count = 21;
-            } else {
-                var count = 11;
-            };
-
-            /* TIMER */
-            var counter = setInterval(timer, 1000);
-
-            function timer() {
-                count = count - 1;
-                if (count <= 0) {
-                    clearInterval(counter);
-                    //counter ended, do something here
-                    incorrect();
-                    return;
-                };
-                //showing the number of seconds here
-                $('.time').text(count);
-            };
 
             $('#difficulty').text(difficulty);
 
@@ -185,44 +163,78 @@
         }
 
         function obfuscate(value) {
-            if (getRandomInt(2) === 1 ) {
-                return ans += getRandomInt(5) + 1;
+            if (getRandomInt(2) === 1) {
+                return value += getRandomInt(5) + 1;
             } else {
-                return ans -= getRandomInt(5) - 1;
+                return value -= getRandomInt(5) - 1;
             };
         };
 
+        function timer(count, counter) {
+                count = count - 1;
+                if (count <= 0) {
+                    clearInterval(counter);
+                    //counter ended, do something here
+                    incorrect();
+                    return;
+                };
+                //showing the number of seconds here
+                $('.time').text(count);
+            };
+
         function getQuestion() {
+            $('html').css({
+                'backgroundColor': 'white'
+            });
+
+            if ($('#difficulty').text() == 'easy') {
+                $('.time').text('');
+            } else if ($('#difficulty').text() == 'medium') {
+                timer(21, setInterval(timer, 1000));
+            } else {
+                timer(11, setInterval(timer, 1000));
+            };           
+
             ans = -0.1;
             while (!Number.isInteger(ans) || (ans < 0)) {
                 q = [2 + getRandomInt(13), operators[getRandomInt(operators.length)], 2 + getRandomInt(13)];
                 ans = eval(q[0] + q[1] + q[2]);
-                console.log(ans);
             };
             $('.question').text(q[0] + " " + q[1] + " " + q[2]);
 
             /* GET ANSWERS */
             possibleAnswers = [ans]
-            while (possibleAnswers.length < 5) {
+            while (possibleAnswers.length < 4) {
                 a = obfuscate(ans);
                 if (!possibleAnswers.includes(a)) {
                     possibleAnswers.push(a);
                 };
             };
-            
+            console.log(possibleAnswers);
             possibleAnswers.sort(function () {
                 return .5 - Math.random();
             });
-
+            
             $('#a').text(possibleAnswers[0]);
             $('#b').text(possibleAnswers[1]);
             $('#c').text(possibleAnswers[2]);
             $('#d').text(possibleAnswers[3]);
         };
 
-        function checkAnswer(input, ans) {
-            console.log(param);
-                };
+        function checkAnswer(input) {
+            console.log(input, window.ans);
+            if (input == window.ans) {
+                correct();
+                setTimeout(function () {
+                    getQuestion()
+                }, 500);
+            } else {
+                incorrect();
+                setTimeout(function () {
+                    getQuestion()
+                }, 500);
+            }
+        };
 
         function incorrect() {
             $('html').css({
@@ -234,16 +246,19 @@
             $('html').css({
                 'backgroundColor': 'green'
             });
+            score = eval($('.score').text() + 1);
+            $('.score').text(score);
         };
+        
     </script>
 
     <div class="home" style="display:block">
         <img src="assets/logo.png" alt="Ada Maths logo" id="logo">
 
         <div class="options">
-            <button style="background-color:#3369ff" onclick="startQuiz('easy',this)">Easy</button>
-            <button style="background-color:#47e018" onclick="startQuiz('medium',this)">Medium</button>
-            <button style="background-color:#ff3333" onclick="startQuiz('hard',this)">Hard</button>
+            <button style="background-color:#3369ff" onclick="startQuiz('easy', window.ans)">Easy</button>
+            <button style="background-color:#47e018" onclick="startQuiz('medium',window.ans)">Medium</button>
+            <button style="background-color:#ff3333" onclick="startQuiz('hard',window.ans)">Hard</button>
         </div>
     </div>
 
