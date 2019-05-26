@@ -148,6 +148,7 @@
         const operators = ["*", "/", "+", "-"];
         let score = 0;
         let count = 0;
+        let qCount = 0;
 
         function startQuiz(difficulty) {
             $('.home').fadeOut();
@@ -160,21 +161,16 @@
             if ($('#difficulty').text() == 'easy') {
                 $('.time').text('');
             } else if ($('#difficulty').text() == 'medium') {
-                console.log("fsd");
                 count = 21;
             } else {
                 count = 11;
             };
 
-            for (i=0; i<1; i) {
-                getQuestion(count);
-            };
-
-
+            getQuestion(count);
         };
 
         function getQuestion(count) {
-            i += 1;
+            console.log("new question rendered");
             $('html').css({
                 'backgroundColor': 'white'
             });
@@ -182,9 +178,10 @@
             if ($('#difficulty').text() !== 'easy') {
                 let timer = setInterval( () => {
                     count = count - 1;
-                    console.log("count; ", count)
 
                     if (count === 0) {
+                        clearInterval(timer);
+                        checkAnswer(" ");
                         incorrect();
                     }
                     $('.time').text(count);
@@ -218,28 +215,43 @@
         };
 
         function checkAnswer(input) {
-            i += 1;
-            clearInterval(timer);
+            console.log("check answer");
             if (input == window.ans) {
                 correct();
             } else {
                 incorrect();
-            }
+            };
+            if (qCount < 2) {
+                qCount++;
+                getQuestion(count);
+            } else {
+                getScore();
+            };
         };
 
         function incorrect() {
+            console.log("wrong answer");
             $('html').css({
                 'backgroundColor': 'red'
             });
         };
 
         function correct() {
+            console.log("correct answer");
             $('html').css({
                 'backgroundColor': 'green'
             });
             score += 1;
             $('.score').text(score);
         };
+
+        function getScore() {
+            console.log("get score");
+            $('.test').fadeOut();
+            setTimeout(function () {
+                $('.score').fadeIn();
+            }, 800);
+        }
 
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
@@ -252,10 +264,6 @@
                 return value -= getRandomInt(5) - 1;
             };
         };
-
-        function timer(count) {
-                
-            };
         
     </script>
 
@@ -291,6 +299,8 @@
 
     <div class="score" style="display:none">
         <img src="assets/logo.png" alt="Ada Maths logo" id="logo">
+
+        <div class="scoreCount">100</div>
     </div>
 
 
