@@ -1,4 +1,10 @@
 const operators = ["*", "/", "+", "-"];
+const opConvert = {
+    '+':'+',
+    '-':'-',
+    '*':'x',
+    '/':'÷'
+};
 let score = 0;
 let count = 0;
 let qCount = 0;
@@ -11,9 +17,9 @@ function startQuiz(difficulty) {
 
     $('#difficulty').text(difficulty);
 
-    if ($('#difficulty').text() == 'easy') {
+    if ($('#difficulty').text() == 'Easy') {
         $('.time').text('');
-    } else if ($('#difficulty').text() == 'medium') {
+    } else if ($('#difficulty').text() == 'Medium') {
         count = 21;
     } else {
         count = 11;
@@ -28,7 +34,7 @@ function getQuestion(count) {
         });
     }, 500);
 
-    if ($('#difficulty').text() !== 'easy') {
+    if ($('#difficulty').text() !== 'Easy') {
         window.timer = setInterval(() => {
             count = count - 1;
 
@@ -46,7 +52,7 @@ function getQuestion(count) {
         q = [2 + getRandomInt(11), operators[getRandomInt(operators.length)], 2 + getRandomInt(11)];
         ans = eval(q[0] + q[1] + q[2]);
     };
-    $('.question').text(q[0] + " " + q[1] + " " + q[2]);
+    $('.question').text(q[0] + " " + opConvert[q[1]] + " " + q[2]);
 
     /* GET ANSWERS */
     possibleAnswers = [ans]
