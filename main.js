@@ -3,12 +3,6 @@ let score = 0;
 let count = 0;
 let qCount = 0;
 
-$('.test').hide();
-$('.test').hide();
-$('.q-feedback').hide();
-$('.results').hide();
-
-
 function startQuiz(difficulty) {
     $('.home').fadeOut();
     setTimeout(function () {
@@ -24,12 +18,10 @@ function startQuiz(difficulty) {
     } else {
         count = 11;
     };
-
     getQuestion(count);
 };
 
 function getQuestion(count) {
-    console.log("new question rendered");
     setTimeout(() => {
         $('html').css({
             'backgroundColor': 'white'
@@ -76,7 +68,6 @@ function getQuestion(count) {
 };
 
 function checkAnswer(input) {
-    console.log("check answer");
     clearInterval(window.timer);
     $('.test').hide();
     if (input == window.ans) {
@@ -97,21 +88,18 @@ function checkAnswer(input) {
 };
 
 function incorrect() {
-    console.log("wrong answer");
     $('#incorrect').css({
         'display': 'flex'
     });
 };
 
 function correct() {
-    console.log("correct answer");
     $('#correct').fadeIn();
     score += 1;
     $('.score').text(score);
 };
 
 function getScore() {
-    console.log("get score");
     $('.test').hide();
     $('.scoreCount').text(score);
     $('.results').fadeIn();

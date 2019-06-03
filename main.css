@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'orange juice';
+    font-style: normal;
+    font-weight: normal;
+    src: local('orange juice'), url('./assets/orange\ juice\ 2.0_0.woff') format('woff');
+}
+
 html {
     background-color: rgb(255, 255, 255);
 }
@@ -9,8 +16,8 @@ html {
 
 #logo {
     width: auto;
-    height: 30vh;
-    margin-top: 25vh;
+    height: 20vh;
+    margin-top: 22vh;
     margin-left: 50vw;
     top: 50%;
     left: 50%;
@@ -19,10 +26,19 @@ html {
     transform: translateX(-50%) translateY(-50%);
 }
 
+.text-logo {
+    font-family: 'orange juice' !important;
+    font-weight: normal;
+    font-size: 60px;
+    text-align: center;
+    margin-top: -10vh;
+    color: #000000;
+}
+
 .options {
     display: flex;
     flex-direction: column;
-    margin-top: -10vh;
+    margin-top: 4vh;
 }
 
 .options button {
