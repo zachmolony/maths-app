@@ -5,268 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/main.css">
+    <link href="main.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="main.js"></script>
     <title>Maths app</title>
 </head>
-<style>
-    html {
-        background-color: rgb(255, 255, 255);
-    }
-
-    * {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-    }
-
-    #logo {
-        width: auto;
-        height: 25vh;
-        margin-top: 25vh;
-        margin-left: 50vw;
-        top: 50%;
-        left: 50%;
-        -moz-transform: translateX(-50%) translateY(-50%);
-        -webkit-transform: translateX(-50%) translateY(-50%);
-        transform: translateX(-50%) translateY(-50%);
-    }
-
-    .options {
-        display: flex;
-        flex-direction: column;
-        margin-top: -8vh;
-    }
-
-    .options button {
-        display: inline-block;
-        padding: 1.2em 5em;
-        margin: 0 1em 1em 0;
-        border-radius: 0.15em;
-        box-sizing: border-box;
-        text-decoration: none;
-        font-family: 'Roboto', sans-serif;
-        text-transform: uppercase;
-        font-size: 5vw;
-        font-weight: 400;
-        color: #FFFFFF;
-        background-color: #3369ff;
-        box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
-        text-align: center;
-        position: relative;
-    }
-
-    .options button:active {
-        top: 0.1em;
-    }
-
-    @media all and (max-width:30em) {
-        .options button {
-            display: block;
-            margin: 0.4em auto;
-        }
-    }
-
-    /* QUESTION PAGE */
-
-    .topbar {
-        display: flex;
-        position: absolute;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100vw;
-        margin-top: 8vh;
-    }
-
-    #difficulty {
-        position: absolute;
-        margin-top: 8vh;
-        text-align: center;
-        width: 100%;
-        font-weight: 600;
-        font-size: 10vw;
-        color: #ff3333;
-    }
-
-    .time {
-        position: relative;
-        padding-left: 5vw;
-        font-weight: 600;
-        font-size: 10vw;
-        color: #000000;
-        text-align: left;
-    }
-
-    .score {
-        position: relative;
-        padding-right: 5vw;
-        font-weight: 600;
-        font-size: 10vw;
-        color: #000000;
-        text-align: center;
-    }
-
-    .question {
-        position: absolute;
-        margin-top: 25vh;
-        width: 100%;
-        font-size: 5em;
-        text-align: center;
-    }
-
-    .answers {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-        position: absolute;
-        margin-top: 40vh;
-        margin-left: 10vw;
-        height: 40vh;
-        width: 80vw;
-    }
-
-    .answers button {
-        margin-top: 10vw;
-        width: 35vw;
-        height: 35vw;
-        border-radius: 0.15em;
-        box-sizing: border-box;
-        text-decoration: none;
-        font-family: 'Roboto', sans-serif;
-        text-transform: uppercase;
-        font-size: 3em;
-        font-weight: 400;
-        color: #FFFFFF;
-        box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
-        text-align: center;
-    }
-</style>
 
 <body>
-    <script>
-        const operators = ["*", "/", "+", "-"];
-        let score = 0;
-        let count = 0;
-        let qCount = 0;
-
-        function startQuiz(difficulty) {
-            $('.home').fadeOut();
-            setTimeout(function () {
-                $('.test').fadeIn();
-            }, 800);
-
-            $('#difficulty').text(difficulty);
-
-            if ($('#difficulty').text() == 'easy') {
-                $('.time').text('');
-            } else if ($('#difficulty').text() == 'medium') {
-                count = 21;
-            } else {
-                count = 11;
-            };
-
-            getQuestion(count);
-        };
-
-        function getQuestion(count) {
-            console.log("new question rendered");
-            $('html').css({
-                'backgroundColor': 'white'
-            });
-
-            if ($('#difficulty').text() !== 'easy') {
-                let timer = setInterval( () => {
-                    count = count - 1;
-
-                    if (count === 0) {
-                        clearInterval(timer);
-                        checkAnswer(" ");
-                        incorrect();
-                    }
-                    $('.time').text(count);
-                }, 1000);    
-            };
-
-            ans = -0.1;
-            while (!Number.isInteger(ans) || (ans < 0)) {
-                q = [2 + getRandomInt(13), operators[getRandomInt(operators.length)], 2 + getRandomInt(13)];
-                ans = eval(q[0] + q[1] + q[2]);
-            };
-            $('.question').text(q[0] + " " + q[1] + " " + q[2]);
-
-            /* GET ANSWERS */
-            possibleAnswers = [ans]
-            while (possibleAnswers.length < 4) {
-                a = obfuscate(ans);
-                if (!possibleAnswers.includes(a)) {
-                    possibleAnswers.push(a);
-                };
-            };
-            console.log(possibleAnswers);
-            possibleAnswers.sort(function () {
-                return .5 - Math.random();
-            });
-            
-            $('#a').text(possibleAnswers[0]);
-            $('#b').text(possibleAnswers[1]);
-            $('#c').text(possibleAnswers[2]);
-            $('#d').text(possibleAnswers[3]);
-        };
-
-        function checkAnswer(input) {
-            console.log("check answer");
-            if (input == window.ans) {
-                correct();
-            } else {
-                incorrect();
-            };
-            if (qCount < 2) {
-                qCount++;
-                getQuestion(count);
-            } else {
-                getScore();
-            };
-        };
-
-        function incorrect() {
-            console.log("wrong answer");
-            $('html').css({
-                'backgroundColor': 'red'
-            });
-        };
-
-        function correct() {
-            console.log("correct answer");
-            $('html').css({
-                'backgroundColor': 'green'
-            });
-            score += 1;
-            $('.score').text(score);
-        };
-
-        function getScore() {
-            console.log("get score");
-            $('.test').fadeOut();
-            setTimeout(function () {
-                $('.score').fadeIn();
-            }, 800);
-        }
-
-        function getRandomInt(max) {
-            return Math.floor(Math.random() * max);
-        }
-
-        function obfuscate(value) {
-            if (getRandomInt(2) === 1) {
-                return value += getRandomInt(5) + 1;
-            } else {
-                return value -= getRandomInt(5) - 1;
-            };
-        };
-        
-    </script>
-
     <div class="home" style="display:block">
         <img src="assets/logo.png" alt="Ada Maths logo" id="logo">
 
@@ -294,13 +40,32 @@
             <button id="c" onclick="checkAnswer($(this).text())" style="background-color:#4bec1a"></button>
             <button id="d" onclick="checkAnswer($(this).text())" style="background-color:rgb(255, 141, 11)"></button>
         </div>
-
     </div>
 
-    <div class="score" style="display:none">
-        <img src="assets/logo.png" alt="Ada Maths logo" id="logo">
+    <div id="correct" class="q-feedback" style="display:none">
+        <img src="./assets/happy.png" alt="">
+        <h1>Correct!</h1>
+    </div>
 
-        <div class="scoreCount">100</div>
+    <div id="incorrect" class="q-feedback" style="display:none">
+        <img src="./assets/sad.png" alt="">
+        <h1>Wrong</h1>
+    </div>
+
+    <div id="good-score" class="results" style="display:none">
+        <h1>Your score is</h1><br>
+        <h1>
+            <div class="scoreCount">0</div>
+        </h1>
+        <button style="background-color:#3369ff" onclick="restart()">Try Again</button>
+    </div>
+
+    <div id="bad-score" class="results" style="display:none">
+        <h1>Your score is</h1><br>
+        <h1>
+            <div class="scoreCount">0</div>
+        </h1>
+        <button style="background-color:#3369ff" onclick="restart()">Try Again</button>
     </div>
 
 
