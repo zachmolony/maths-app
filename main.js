@@ -5,9 +5,13 @@ const opConvert = {
     '*':'x',
     '/':'÷'
 };
+
 let score = 0;
 let count = 0;
 let qCount = 0;
+
+var correctSound = new Audio('./assets/correct.mp3');
+var incorrectSound = new Audio('./assets/incorrect.wav');
 
 function startQuiz(difficulty) {
     $('.home').fadeOut();
@@ -94,12 +98,14 @@ function checkAnswer(input) {
 };
 
 function incorrect() {
+    incorrectSound.play();
     $('#incorrect').css({
         'display': 'flex'
     });
 };
 
 function correct() {
+    correctSound.play();
     $('#correct').fadeIn();
     score += 1;
     $('.score').text(score);
@@ -125,6 +131,7 @@ function obfuscate(value) {
 
 function restart() {
     score = 0;
+    qCount = 0;
     $('.results').fadeOut();
     $('.home').fadeIn();
 }
