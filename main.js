@@ -10,7 +10,7 @@ let score = 0;
 let count = 0;
 let qCount = 0;
 
-var correctSound = new Audio('./assets/correct.mp3');
+var correctSound = new Audio('./assets/correct.wav');
 var incorrectSound = new Audio('./assets/incorrect.wav');
 
 function startQuiz(difficulty) {
@@ -88,7 +88,7 @@ function checkAnswer(input) {
     setTimeout(() => {
         $('.q-feedback').hide();
         $('.test').fadeIn();
-        if (qCount < 2) {
+        if (qCount < 9) {
             qCount++;
             getQuestion(count);
         } else {
