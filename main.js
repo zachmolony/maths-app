@@ -113,8 +113,12 @@ function correct() {
 
 function getScore() {
     $('.test').hide();
+    if (score > 4) {
+        $('#good-score').fadeIn();
+    } else {
+        $('#bad-score').fadeIn();
+    }
     $('.scoreCount').text(score);
-    $('.results').fadeIn();
 }
 
 function getRandomInt(max) {
