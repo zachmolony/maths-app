@@ -1,4 +1,4 @@
-# Ada Maths
+<img src="./assets/logo_for_readme.png" width=200>
 
 Simple maths game for U17 coursework.
 
