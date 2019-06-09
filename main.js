@@ -66,7 +66,6 @@ function getQuestion(count) {
             possibleAnswers.push(a);
         };
     };
-    console.log(possibleAnswers);
     possibleAnswers.sort(function () {
         return .5 - Math.random();
     });
@@ -131,6 +130,7 @@ function obfuscate(value) {
 
 function restart() {
     score = 0;
+    $('.score').text(score);
     qCount = 0;
     $('.results').fadeOut();
     $('.home').fadeIn();
