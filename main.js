@@ -23,6 +23,7 @@ function startQuiz(difficulty) {
 
     if ($('#difficulty').text() == 'Easy') {
         $('.time').text('');
+        $('.time-label').text('');
     } else if ($('#difficulty').text() == 'Medium') {
         count = 21;
     } else {

@@ -77,8 +77,20 @@ html {
     position: absolute;
     flex-direction: row;
     justify-content: space-between;
-    width: 100vw;
+    width: 90vw;
     margin-top: 8vh;
+}
+
+.labels {
+    display: flex;
+    position: absolute;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 88vw;
+    margin-right: 5vw;
+    margin-left: 5vw;
+    margin-top: -3vh;
+    font-weight: 800;
 }
 
 #difficulty {
@@ -102,7 +114,6 @@ html {
 
 .score {
     position: relative;
-    padding-right: 5vw;
     font-weight: 600;
     font-size: 10vw;
     color: #000000;
