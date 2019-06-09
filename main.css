@@ -171,7 +171,7 @@ html {
 .q-feedback img {
     width: 20vw;
     height: auto;
-    margin: 10vw;
+    margin: 8vw;
 }
 
 #correct {
@@ -180,6 +180,10 @@ html {
 
 #incorrect {
     background-color: #ff3333;
+}
+
+.actual-ans {
+    font-size: 18vh !important;
 }
 
 /* RESULTS */

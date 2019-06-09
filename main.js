@@ -37,7 +37,7 @@ function getQuestion(count) {
         $('html').css({
             'backgroundColor': 'white'
         });
-    }, 500);
+    }, 1000);
 
     if ($('#difficulty').text() !== 'Easy') {
         window.timer = setInterval(() => {
@@ -102,6 +102,7 @@ function incorrect() {
     $('#incorrect').css({
         'display': 'flex'
     });
+    $('.actual-ans').text(window.ans);
 };
 
 function correct() {
