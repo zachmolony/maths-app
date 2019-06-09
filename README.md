@@ -1,4 +1,4 @@
-<img src="./assets/logo_for_readme.png" width=200>
+<img src="./assets/logo_for_readme.png" width=300>
 
 Simple maths game for U17 coursework.
 
